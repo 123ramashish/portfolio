@@ -1,0 +1,25 @@
+.button {
+    padding: 0.5em 2em;
+    background-color:black;
+    border:none;
+    color:white;
+    border-radius: 800px;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  
+  .button::after {
+    content:"";
+  position:absolute;
+  height:108%;
+  width:104%;
+  border-radius:1000px;
+  background-image:linear-gradient(to  bottom right,#008cff,#e100ff);
+  z-index:-1;
+  }
+  .button:hover{
+    z-index: 0;
+  }
+  
