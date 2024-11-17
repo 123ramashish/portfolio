@@ -10,12 +10,7 @@ const FrontendProject = () => {
   link="https://www.fixxitphysio.com/"
 />
 
-      <ProjectCard
-        src="/cleanup.png"
-        title="Samasya-Samadhan"
-        description="Samasya-Samadhan is an environmental startup project aimed at promoting clean and green initiatives. It addresses pollution and environmental issues through community-driven solutions."
-        link="https://samasya-samadhan.onrender.com"
-      />
+     
       <ProjectCard
         src="/tastytreat.png"
         title="TastyTreat"
