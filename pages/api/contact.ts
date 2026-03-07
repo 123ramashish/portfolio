@@ -1,3 +1,4 @@
+'use server'
 import nodemailer from 'nodemailer'
 import { NextApiRequest, NextApiResponse } from "next";
 

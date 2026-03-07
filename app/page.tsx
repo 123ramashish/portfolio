@@ -1,3 +1,4 @@
+'use client'
 import Contact from "@/components/main/Contact";
 import Encryption from "@/components/main/Encryption";
 import { GoogleGeminiEffectDemo } from "@/components/main/Gemini";

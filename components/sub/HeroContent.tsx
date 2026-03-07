@@ -51,7 +51,7 @@ const HeroContent = () => {
                     <button
                     className={styles.button}
                 >
-                        Hire Me 
+                      Let's Work Together
                 </button>
                 </motion.a>
             </div>

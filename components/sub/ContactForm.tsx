@@ -1,251 +1,277 @@
-'use client';
-import { FaArrowRightLong } from "react-icons/fa6";
-import { useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { useSpring, useScroll } from "framer-motion";
-import styles from "./MyButton.module.css";
+"use client"
+
+import { useState, useRef, ChangeEvent, FormEvent } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { FaArrowRightLong } from 'react-icons/fa6'
 
 interface Contact {
-    name: string;
-    email: string;
-    subject: string;
-    message: string;
+    name: string
+    email: string
+    subject: string
+    message: string
+}
+
+const FIELDS = [
+    { id: 'name',    label: 'Full Name',    type: 'text',  placeholder: 'John Doe',              multiline: false },
+    { id: 'email',   label: 'Email',        type: 'email', placeholder: 'john@example.com',      multiline: false },
+    { id: 'subject', label: 'Subject',      type: 'text',  placeholder: 'Project Enquiry...',    multiline: false },
+    { id: 'message', label: 'Message',      type: 'text',  placeholder: 'Tell me about your project...', multiline: true },
+] as const
+
+// ── Particle burst on send ────────────────────────────────────────────────────
+const SendParticles = ({ trigger }: { trigger: boolean }) => {
+    const particles = Array.from({ length: 16 }, (_, i) => ({
+        angle: (i / 16) * 360,
+        dist: 50 + Math.random() * 40,
+        color: i % 3 === 0 ? '#7c3aed' : i % 3 === 1 ? '#06b6d4' : '#a78bfa',
+        size: 3 + Math.random() * 3,
+    }))
+    return (
+        <AnimatePresence>
+            {trigger && (
+                <div className='absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible'>
+                    {particles.map((p, i) => {
+                        const r = (p.angle * Math.PI) / 180
+                        return (
+                            <motion.div
+                                key={i}
+                                initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+                                animate={{ x: Math.cos(r) * p.dist, y: Math.sin(r) * p.dist, opacity: 0, scale: 0 }}
+                                transition={{ duration: 0.7, delay: i * 0.02, ease: 'easeOut' }}
+                                className='absolute rounded-full'
+                                style={{ width: p.size, height: p.size, background: p.color, boxShadow: `0 0 6px ${p.color}` }}
+                            />
+                        )
+                    })}
+                </div>
+            )}
+        </AnimatePresence>
+    )
 }
 
 const ContactForm = () => {
-    const [contact, setContact] = useState<Contact>({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-    });
-
-    const { scrollYProgress } = useScroll();
-    const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001,
-    });
+    const ref = useRef(null)
+    const inView = useInView(ref, { once: true, margin: '-80px' })
+    const [contact, setContact] = useState<Contact>({ name: '', email: '', subject: '', message: '' })
+    const [focused, setFocused] = useState<string | null>(null)
+    const [sending, setSending] = useState(false)
+    const [sent, setSent] = useState(false)
+    const [burst, setBurst] = useState(false)
+    const [error, setError] = useState(false)
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { id, value } = e.target;
-        setContact((prevContact) => ({
-            ...prevContact,
-            [id]: value,
-        }));
-    };
+        setContact((p) => ({ ...p, [e.target.id]: e.target.value }))
+    }
 
     const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
+        setSending(true)
+        setError(false)
         try {
-            const response = await fetch("/api/contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(contact),
-            });
-
-            if (response.ok) {
-                alert("Message sent successfully!");
-                setContact({ name: "", email: "", message: "", subject: "" });
+            })
+            if (res.ok) {
+                setBurst(true)
+                setTimeout(() => setBurst(false), 800)
+                setTimeout(() => setSent(true), 400)
+                setContact({ name: '', email: '', subject: '', message: '' })
             } else {
-                alert("Failed to send the message.");
+                setError(true)
             }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred. Please try again later.");
+        } catch {
+            setError(true)
+        } finally {
+            setSending(false)
         }
-    };
+    }
 
     return (
-        <div className="text-center md:w-1/3 sm:w-4/5 z-30">
-            <p className="text-xl text-center text-white ">Get In Touch</p>
-            <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center ">
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Name"
-                    required
-                    className="p-2 w-full font-serif text-xl text-white my-4 rounded-lg shadow-xl bg-black border-2 border-gray-600 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300"
-                    value={contact.name}
-                    onChange={handleChange}
-                />
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Email"
-                    required
-                    className="p-2 w-full font-serif text-xl text-white my-4 rounded-lg shadow-xl bg-black border-2 border-gray-600 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300"
-                    value={contact.email}
-                    onChange={handleChange}
-                />
-                <input
-                    type="text"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                    className="p-2 w-full font-serif text-xl text-white my-4 rounded-lg shadow-xl bg-black border-2 border-gray-600 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300"
-                    value={contact.subject}
-                    onChange={handleChange}
-                />
-                <textarea
-                    id="message"
-                    rows={5}
-                    placeholder="Description"
-                    required
-                    className="p-2 mb-8 w-full font-serif text-xl text-white my-4 rounded-lg shadow-xl bg-black border-2 border-gray-600 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300"
-                    value={contact.message}
-                    onChange={handleChange}
-                ></textarea>
+        <div ref={ref} className='w-full md:w-96 z-30'>
 
-                
-                <button
-                    type="submit"
-                    className={styles.button}
-                >
-                    <span className="flex items-center gap-2 text-xl">
-                        Send <FaArrowRightLong className="text-violet-500 text-3xl font-bold"/>
-                    </span>
-                </button>
-               
-            </form>
+            {/* Section label */}
+            <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className='flex items-center gap-2 mb-6 justify-end'
+            >
+                <span className='text-[10px] tracking-widest text-cyan-400 uppercase font-semibold'>
+                    Send a message
+                </span>
+                <div className='h-px w-6 bg-cyan-500' />
+            </motion.div>
+
+            {/* Success state */}
+            <AnimatePresence mode='wait'>
+                {sent ? (
+                    <motion.div
+                        key='success'
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className='flex flex-col items-center justify-center gap-5 py-16 text-center rounded-2xl border border-emerald-500/20'
+                        style={{ background: 'rgba(16,185,129,0.05)' }}
+                    >
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 18, delay: 0.2 }}
+                            className='w-16 h-16 rounded-full flex items-center justify-center text-2xl'
+                            style={{ background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)' }}
+                        >
+                            ✓
+                        </motion.div>
+                        <div>
+                            <p className='text-white font-semibold text-lg'>Message Sent!</p>
+                            <p className='text-gray-500 text-sm mt-1'>I&apos;ll get back to you within 24 hours.</p>
+                        </div>
+                        <button
+                            onClick={() => setSent(false)}
+                            className='text-xs text-violet-400 hover:text-violet-300 transition-colors tracking-widest uppercase'
+                        >
+                            Send another →
+                        </button>
+                    </motion.div>
+                ) : (
+                    <motion.form
+                        key='form'
+                        onSubmit={handleSubmit}
+                        className='flex flex-col gap-4'
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                    >
+                        {FIELDS.map(({ id, label, type, placeholder, multiline }, i) => (
+                            <motion.div
+                                key={id}
+                                initial={{ opacity: 0, y: 24 }}
+                                animate={inView ? { opacity: 1, y: 0 } : {}}
+                                transition={{ duration: 0.55, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                className='relative group'
+                            >
+                                {/* Floating label */}
+                                <motion.label
+                                    htmlFor={id}
+                                    animate={{
+                                        y: focused === id || contact[id as keyof Contact] ? -22 : 0,
+                                        scale: focused === id || contact[id as keyof Contact] ? 0.78 : 1,
+                                        color: focused === id ? '#a78bfa' : '#4b5563',
+                                    }}
+                                    transition={{ duration: 0.2 }}
+                                    className='absolute left-4 top-3.5 text-sm pointer-events-none origin-left font-medium z-10'
+                                    style={{ transformOrigin: 'left center' }}
+                                >
+                                    {label}
+                                </motion.label>
+
+                                {/* Glow border on focus */}
+                                <motion.div
+                                    animate={{
+                                        opacity: focused === id ? 1 : 0,
+                                        boxShadow: focused === id ? '0 0 0 1px #7c3aed, 0 0 20px rgba(124,58,237,0.2)' : 'none',
+                                    }}
+                                    transition={{ duration: 0.2 }}
+                                    className='absolute inset-0 rounded-xl pointer-events-none z-0'
+                                />
+
+                                {multiline ? (
+                                    <textarea
+                                        id={id}
+                                        rows={5}
+                                        required
+                                        value={contact[id as keyof Contact]}
+                                        onChange={handleChange}
+                                        onFocus={() => setFocused(id)}
+                                        onBlur={() => setFocused(null)}
+                                        placeholder={focused === id ? placeholder : ''}
+                                        className='w-full pt-5 pb-3 px-4 rounded-xl text-sm text-white resize-none outline-none transition-all duration-200 relative z-1'
+                                        style={{
+                                            background: 'rgba(255,255,255,0.03)',
+                                            border: `1px solid ${focused === id ? '#7c3aed60' : 'rgba(255,255,255,0.07)'}`,
+                                        }}
+                                    />
+                                ) : (
+                                    <input
+                                        id={id}
+                                        type={type}
+                                        required
+                                        value={contact[id as keyof Contact]}
+                                        onChange={handleChange}
+                                        onFocus={() => setFocused(id)}
+                                        onBlur={() => setFocused(null)}
+                                        placeholder={focused === id ? placeholder : ''}
+                                        className='w-full pt-5 pb-3 px-4 rounded-xl text-sm text-white outline-none transition-all duration-200 relative z-1'
+                                        style={{
+                                            background: 'rgba(255,255,255,0.03)',
+                                            border: `1px solid ${focused === id ? '#7c3aed60' : 'rgba(255,255,255,0.07)'}`,
+                                        }}
+                                    />
+                                )}
+                            </motion.div>
+                        ))}
+
+                        {/* Error message */}
+                        <AnimatePresence>
+                            {error && (
+                                <motion.p
+                                    initial={{ opacity: 0, y: -8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    className='text-xs text-red-400 text-center'
+                                >
+                                    Something went wrong. Please try again.
+                                </motion.p>
+                            )}
+                        </AnimatePresence>
+
+                        {/* Submit button */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={inView ? { opacity: 1, y: 0 } : {}}
+                            transition={{ duration: 0.55, delay: 0.55 }}
+                            className='relative flex justify-end mt-2'
+                        >
+                            <div className='relative'>
+                                <SendParticles trigger={burst} />
+                                <motion.button
+                                    type='submit'
+                                    disabled={sending}
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.97 }}
+                                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                                    className='relative flex items-center gap-3 px-8 py-3.5 rounded-xl font-semibold text-sm text-white overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed'
+                                    style={{ background: 'linear-gradient(135deg, #7c3aed, #06b6d4)' }}
+                                >
+                                    {/* Shimmer sweep */}
+                                    <motion.div
+                                        animate={{ x: ['-100%', '200%'] }}
+                                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 1.5, ease: 'easeInOut' }}
+                                        className='absolute inset-0 w-1/3 skew-x-12 pointer-events-none'
+                                        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)' }}
+                                    />
+
+                                    <span className='relative z-10'>
+                                        {sending ? 'Sending...' : 'Send Message'}
+                                    </span>
+
+                                    <motion.span
+                                        animate={sending ? { x: [0, 6, 0] } : {}}
+                                        transition={{ duration: 0.6, repeat: Infinity }}
+                                        className='relative z-10'
+                                    >
+                                        <FaArrowRightLong className='text-white/80 text-base' />
+                                    </motion.span>
+                                </motion.button>
+                            </div>
+                        </motion.div>
+                    </motion.form>
+                )}
+            </AnimatePresence>
         </div>
-    );
-};
+    )
+}
 
-export default ContactForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "use client";
-// import React from "react";
-// import { Label } from "../ui/label";
-
-
-// export function SignupFormDemo() {
-//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     console.log("Form submitted");
-//   };
-//   return (
-//     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-//       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-//         Welcome to Aceternity
-//       </h2>
-//       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-//         Login to aceternity if you can because we don&apos;t have a login flow
-//         yet
-//       </p>
-
-//       <form className="my-8" onSubmit={handleSubmit}>
-//         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-//           <LabelInputContainer>
-//             <Label htmlFor="firstname">First name</Label>
-//             <Input id="firstname" placeholder="Tyler" type="text" />
-//           </LabelInputContainer>
-//           <LabelInputContainer>
-//             <Label htmlFor="lastname">Last name</Label>
-//             <Input id="lastname" placeholder="Durden" type="text" />
-//           </LabelInputContainer>
-//         </div>
-//         <LabelInputContainer className="mb-4">
-//           <Label htmlFor="email">Email Address</Label>
-//           <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
-//         </LabelInputContainer>
-//         <LabelInputContainer className="mb-4">
-//           <Label htmlFor="password">Password</Label>
-//           <Input id="password" placeholder="••••••••" type="password" />
-//         </LabelInputContainer>
-//         <LabelInputContainer className="mb-8">
-//           <Label htmlFor="twitterpassword">Your twitter password</Label>
-//           <Input
-//             id="twitterpassword"
-//             placeholder="••••••••"
-//             type="twitterpassword"
-//           />
-//         </LabelInputContainer>
-
-//         <button
-//           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-//           type="submit"
-//         >
-//           Sign up &rarr;
-//           <BottomGradient />
-//         </button>
-
-//         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
-
-//         <div className="flex flex-col space-y-4">
-//           <button
-//             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-//             type="submit"
-//           >
-//             <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-//             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-//               GitHub
-//             </span>
-//             <BottomGradient />
-//           </button>
-//           <button
-//             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-//             type="submit"
-//           >
-//             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-//             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-//               Google
-//             </span>
-//             <BottomGradient />
-//           </button>
-//           <button
-//             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-//             type="submit"
-//           >
-//             <IconBrandOnlyfans className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-//             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-//               OnlyFans
-//             </span>
-//             <BottomGradient />
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// }
-
-// const BottomGradient = () => {
-//   return (
-//     <>
-//       <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-//       <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-//     </>
-//   );
-// };
-
-// const LabelInputContainer = ({
-//   children,
-//   className,
-// }: {
-//   children: React.ReactNode;
-//   className?: string;
-// }) => {
-//   return (
-//     <div className={cn("flex flex-col space-y-2 w-full", className)}>
-//       {children}
-//     </div>
-//   );
-// };
+export default ContactForm
