@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { FaPhone, FaLocationDot } from 'react-icons/fa6'
-import { MdEmail } from 'react-icons/md'
+import { MdEmail } from 'react-icons/md'    
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 const INFO = [
