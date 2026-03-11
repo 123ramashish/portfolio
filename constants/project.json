@@ -1,0 +1,248 @@
+{
+  "projects": [
+    {
+      "order": 1,
+      "title": "AmeyaSuite",
+      "type": "mobile",
+      "description": "An enterprise software suite designed for business workflow management including document handling, employee management, and productivity tools.",
+      "url": "",
+      "images": ["https://ik.imagekit.io/wiijce6yz/368b2c22-30b7-4e69-aa72-3cc0e7ed9b51.jpeg?updatedAt=1773230124905","https://ik.imagekit.io/wiijce6yz/6346eae3-c56c-4939-91b1-1c2e1e20b51a.jpeg?updatedAt=1773230125146","https://ik.imagekit.io/wiijce6yz/6644dcdd-edf4-4468-878b-b7d815737257.jpeg?updatedAt=1773230125507","https://ik.imagekit.io/wiijce6yz/f10cc614-0b8e-4467-900b-0766f028d005.jpeg?updatedAt=1773230125590","https://ik.imagekit.io/wiijce6yz/1594503d-b855-4fa3-a2b6-d77eb0be9d44.jpeg?updatedAt=1773230125511","https://ik.imagekit.io/wiijce6yz/c2315a44-585e-41e2-860d-781c5f790bbb.jpeg?updatedAt=1773230125653","https://ik.imagekit.io/wiijce6yz/d536ca95-f022-4a3e-883a-e8dbe8753487.jpeg?updatedAt=1773230125667","https://ik.imagekit.io/wiijce6yz/a9e1c82a-46c6-4dee-956e-1126ef348f17.jpeg?updatedAt=1773230125626"],
+      "tech": [
+        "React Native",
+        "Next.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Redux Toolkit"
+      ]
+    },
+    {
+      "order": 1,
+      "title": "AmeyaSuite",
+      "type": "Web",
+      "description": "An enterprise software suite designed for business workflow management including document handling, employee management, and productivity tools.",
+      "url": "",
+      "images":["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.30.51%E2%80%AFAM.png?updatedAt=1773169294313","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.29.11%E2%80%AFAM.png?updatedAt=1773169294177","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.29.42%E2%80%AFAM.png?updatedAt=1773169294157","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.30.34%E2%80%AFAM.png?updatedAt=1773169294078"],
+      "tech": [
+        "React Native",
+        "Next.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Redux Toolkit"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "DocVault",
+      "type": "web",
+      "description": "A secure document management platform allowing users to upload, store, manage, and share files with role-based access control.",
+      "url": "",
+      "images": ["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.22.19%E2%80%AFAM.png?updatedAt=1773168844337","https://ik.imagekit.io/wiijce6yz/769958e4-e48e-4e9b-99bb-c2f0d1abf6b9.jpeg?updatedAt=1773168844171"],
+      "tech": [
+        "Next.js",
+        "React.js",
+        "Redux Toolkit",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "JWT Authentication"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "OfficePulse",
+      "type": "web",
+      "description": "A workplace productivity and employee management system for tracking tasks, attendance, team performance, and office workflows.",
+      "url": "",
+      "images": ["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.18.52%E2%80%AFAM.png?updatedAt=1773168636086","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.19.16%E2%80%AFAM.png?updatedAt=1773168636032","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.20.18%E2%80%AFAM.png?updatedAt=1773168636027"],
+      "tech": [
+        "Next.js",
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "JWT Authentication"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "CashWise",
+      "type": "web",
+      "description": "A personal finance management application helping users track expenses, manage budgets, and visualize financial insights.",
+      "url": "",
+      "images": ["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.15.53%E2%80%AFAM.png?updatedAt=1773168496189","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.17.53%E2%80%AFAM.png?updatedAt=1773168496237","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.16.17%E2%80%AFAM.png?updatedAt=1773168496032"],
+      "tech": [
+        "Next.js",
+        "React.js",
+        "Node.js",
+        "MongoDB",
+        "Tailwind CSS",
+        "REST APIs"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Taskify",
+      "type": "web",
+      "description": "A task and productivity management application to organize daily work, assign tasks to teams, and track project progress.",
+      "url": "",
+      "images": ["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.26.46%E2%80%AFAM.png?updatedAt=1773169021282","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.24.47%E2%80%AFAM.png?updatedAt=1773169020882","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.25.22%E2%80%AFAM.png?updatedAt=1773169021021","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.25.01%E2%80%AFAM.png?updatedAt=1773169020965","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.25.32%E2%80%AFAM.png?updatedAt=1773169020951",""],
+      "tech": [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Tailwind CSS",
+        "REST APIs"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "FixitPhysio",
+      "type": "web",
+      "description": "A comprehensive physiotherapy platform offering rehabilitation services, therapy programs, and expert consultation.",
+      "url": "https://www.fixxitphysio.com/",
+      "images": ["https://ik.imagekit.io/wiijce6yz/pshy.png"],
+      "tech": ["Next.js", "React.js", "Tailwind CSS", "Node.js", "MongoDB"]
+    },
+    {
+      "order": 7,
+      "title": "TastyTreat",
+      "type": "web",
+      "description": "A modern food delivery application where users can browse restaurants, add items to cart, and securely place orders.",
+      "url": "https://tasty-treat-pizza.onrender.com",
+      "images": ["https://ik.imagekit.io/wiijce6yz/tastytreat.png"],
+      "tech": [
+        "React.js",
+        "Tailwind CSS",
+        "Redux",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Mongoose",
+        "JWT Authentication"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "Samasya-Samadhan",
+      "type": "web",
+      "description": "An environmental initiative platform promoting river cleaning, plantation drives, pollution awareness, and community engagement.",
+      "url": "https://samasya-samadhan.onrender.com",
+      "images": ["https://ik.imagekit.io/wiijce6yz/cleanup.png"],
+      "tech": ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"]
+    },
+    {
+      "order": 9,
+      "title": "Technology Blog App",
+      "type": "web",
+      "description": "A full-stack blog platform where users can create, edit, and manage technology articles with secure APIs.",
+      "url": "https://technology-blog-yal1.onrender.com",
+      "images": [],
+      "tech": [
+        "Next.js",
+        "React.js",
+        "Tailwind CSS",
+        "Node.js",
+        "Firebase",
+        "MongoDB",
+        "JWT Authentication"
+      ]
+    },
+    {
+      "order": 10,
+      "title": "Real-Time Location Tracker",
+      "type": "web",
+      "description": "A real-time GPS tracking application that visualizes user movement on an interactive map.",
+      "url": "https://track-me.onrender.com",
+      "images": ["https://ik.imagekit.io/wiijce6yz/map.png"],
+      "tech": [
+        "Node.js",
+        "Express.js",
+        "Socket.io",
+        "JavaScript",
+        "Google Maps API"
+      ]
+    },
+    {
+      "order": 11,
+      "title": "MVNFMS Solar System",
+      "type": "web",
+      "description": "A solar energy management system providing real-time analytics and performance monitoring.",
+      "url": "https://mvnfms.com/",
+      "images": ["https://ik.imagekit.io/wiijce6yz/mvnfmsimage.png"],
+      "tech": ["WordPress", "PHP", "MySQL", "JavaScript"]
+    },
+    {
+      "order": 12,
+      "title": "Liorak E-Commerce Management",
+      "type": "web",
+      "description": "A powerful e-commerce management platform for product listing, order tracking, and inventory management.",
+      "url": "https://liorak.in/",
+      "images": ["https://ik.imagekit.io/wiijce6yz/liorakimage.png"],
+      "tech": ["WordPress", "WooCommerce", "PHP", "MySQL", "JavaScript"]
+    },
+    {
+  "order": 13,
+  "title": "Ajit Task & Ticket Manager",
+  "type": "mobile",
+  "description": "A mobile productivity application developed for Ajit to manage daily tasks and handle a ticketing system efficiently. The app allows users to create tasks, track ticket status, assign responsibilities, and monitor progress in real time, improving workflow and team coordination.",
+  "url": "",
+  "images": ["https://ik.imagekit.io/wiijce6yz/1333d356-d4f0-44b2-8744-bd94255dc58e.jpeg?updatedAt=1773230448525","https://ik.imagekit.io/wiijce6yz/b626914b-182d-4fca-b280-d93759a27ec1.jpeg?updatedAt=1773230448477","https://ik.imagekit.io/wiijce6yz/f3cce806-37ed-411b-bb48-5ca021585da6.jpeg?updatedAt=1773230448042","https://ik.imagekit.io/wiijce6yz/762ec555-0345-4f82-a6dc-7a553d87fb0f.jpeg?updatedAt=1773230448027","https://ik.imagekit.io/wiijce6yz/54425d50-02ec-4784-bae5-52a926bbfc48.jpeg?updatedAt=1773230448526"],
+  "tech": [
+    "React Native",
+    "Redux Toolkit",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "REST APIs"
+  ]
+},
+{
+  "order": 14,
+  "title": "SKM Physiotherapy",
+  "type": "web",
+  "description": "A professional physiotherapy clinic website designed to showcase treatment services, therapy programs, appointment booking, and patient resources with a modern responsive interface.",
+  "url": "",
+  "images": ["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.37.28%E2%80%AFAM.png?updatedAt=1773169710334","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.38.13%E2%80%AFAM.png?updatedAt=1773169710317","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.37.56%E2%80%AFAM.png?updatedAt=1773169710282","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.37.42%E2%80%AFAM.png?updatedAt=1773169710378"],
+  "tech": [
+    "Next.js",
+    "React.js",
+    "Tailwind CSS",
+    "Node.js",
+    "MongoDB"
+  ]
+},
+{
+  "order": 15,
+  "title": "MelliGlow Makhana Export",
+  "type": "web",
+  "description": "A business website built for MelliGlow to promote and export premium makhana products globally, featuring product catalogs, company information, and export inquiry management.",
+  "url": "",
+  "images": ["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.36.04%E2%80%AFAM.png?updatedAt=1773169618086","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.36.41%E2%80%AFAM.png?updatedAt=1773169618808","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.36.29%E2%80%AFAM.png?updatedAt=1773169618045"],
+  "tech": [
+    "Next.js",
+    "React.js",
+    "Tailwind CSS",
+    "Node.js",
+    "MongoDB"
+  ]
+},
+{
+  "order": 16,
+  "title": "Shreywood",
+  "type": "web",
+  "description": "A modern business website developed for Shreywood to showcase products, company services, and client engagement with a clean and responsive user experience.",
+  "url": "",
+  "images": ["https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.34.17%E2%80%AFAM.png?updatedAt=1773169506072","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.34.45%E2%80%AFAM.png?updatedAt=1773169506212","https://ik.imagekit.io/wiijce6yz/Screenshot%202026-03-11%20at%2012.34.33%E2%80%AFAM.png?updatedAt=1773169506074"],
+  "tech": [
+    "Next.js",
+    "React.js",
+    "Tailwind CSS",
+    "Node.js",
+    "MongoDB"
+  ]
+}
+  ]
+}
