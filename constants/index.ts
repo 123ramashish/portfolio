@@ -31,7 +31,7 @@ export const Frontend_skill = [
   { skill_name: "Redux Toolkit", Image: "/redux.png", width: 80, height: 80 },
   { skill_name: "React Query", Image: "/reactquery.png", width: 80, height: 80 },
   { skill_name: "Framer Motion", Image: "/framer.png", width: 80, height: 80 },
-  { skill_name: "Three.js", Image: "/threejs.png", width: 80, height: 80 },
+  // { skill_name: "Three.js", Image: "/threejs.png", width: 80, height: 80 },
 ];
 
 export const Backend_skill = [
@@ -41,7 +41,7 @@ export const Backend_skill = [
   { skill_name: "Mongoose", Image: "/mongoose.png", width: 70, height: 70 },
   { skill_name: "Firebase", Image: "/firebase.png", width: 55, height: 55 },
   { skill_name: "MySQL", Image: "/mysql.png", width: 70, height: 70 },
-  { skill_name: "REST API", Image: "/api.png", width: 70, height: 70 },
+  { skill_name: "REST API", Image: "/rest.png", width: 70, height: 70 },
   { skill_name: "JWT Auth", Image: "/jwt.png", width: 70, height: 70 },
 ];
 
@@ -57,7 +57,7 @@ export const Full_stack = [
 export const Other_skill = [
   { skill_name: "Java", Image: "/java.png", width: 70, height: 70 },
   { skill_name: "Data Structures", Image: "/dsa.png", width: 70, height: 70 },
-  { skill_name: "Algorithms", Image: "/algo.png", width: 70, height: 70 },
+  { skill_name: "Algorithms", Image: "/algorithm.png", width: 70, height: 70 },
   { skill_name: "WordPress", Image: "/wordpress.png", width: 70, height: 70 },
 ];
 

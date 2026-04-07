@@ -89,7 +89,7 @@ const ContactForm = () => {
     }
 
     return (
-        <div ref={ref} className='w-full md:w-96 z-30'>
+        <div ref={ref} className='w-full  z-50'>
 
             {/* Section label */}
             <motion.div

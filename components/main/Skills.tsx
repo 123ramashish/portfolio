@@ -222,7 +222,7 @@ const Skills = () => {
             style={{ background: 'linear-gradient(180deg, #050510 0%, #080818 60%, #050510 100%)' }}
         >
             {/* Three.js floating geometries */}
-            <ThreeBackground />
+            {/* <ThreeBackground /> */}
 
             {/* Ambient glow blobs */}
             <div className='absolute top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none'
@@ -253,8 +253,8 @@ const Skills = () => {
                     transition={{ duration: 0.7, delay: 0.2 }}
                     className='flex flex-wrap gap-4 justify-center'
                 >
-                    <StatPill value='35+' label='Technologies' color='#a78bfa' />
-                    <StatPill value='5+' label='Years coding' color='#38bdf8' />
+                    <StatPill value='15+' label='Technologies' color='#a78bfa' />
+                    <StatPill value='2+' label='Years coding' color='#38bdf8' />
                     <StatPill value='4' label='Skill domains' color='#34d399' />
                     <StatPill value='∞' label='Still learning' color='#fb923c' />
                 </motion.div>

@@ -15,15 +15,15 @@ const Footer = () => {
                             <FaGithub />
                             <span className='text-[15px] ml-[6px] hover:text-violet-500'>Github</span>
                         </a>
-                        <a href='' className='flex flex-row items-center my-[15px] cursor-pointer'>
+                        {/* <a href='' className='flex flex-row items-center my-[15px] cursor-pointer'>
                             <FaYoutube />
                             <span className='text-[15px] ml-[6px] '>Youtube</span>
-                        </a>
+                        </a> */}
                        
-                        <p className='flex flex-row items-center my-[15px] cursor-pointer'>
+                        {/* <p className='flex flex-row items-center my-[15px] cursor-pointer'>
                             <FaDiscord />
                             <span className='text-[15px] ml-[6px]'>Discord</span>
-                        </p>
+                        </p> */}
 
                     </div>
 
@@ -35,14 +35,14 @@ const Footer = () => {
                             <FaLinkedin />
                             <span className='text-[15px] ml-[6px] hover:text-violet-500'>LinkedIn</span>
                         </a>
-                        <a  href='' className='flex flex-row items-center my-[15px] cursor-pointer'>
+                        {/* <a  href='' className='flex flex-row items-center my-[15px] cursor-pointer'>
                             <FaInstagram />
                             <span className='text-[15px] ml-[6px]'>Instagram</span>
-                        </a>
-                        <a href='' className='flex flex-row items-center my-[15px] cursor-pointer'>
+                        </a> */}
+                        {/* <a href='' className='flex flex-row items-center my-[15px] cursor-pointer'>
                             <FaTwitter />
                             <span className='text-[15px] ml-[6px]'>Twitter</span>
-                        </a>
+                        </a> */}
                         
                         
 
@@ -53,10 +53,10 @@ const Footer = () => {
                         <div className='font-bold text-[16px]'>
                             Services
                         </div>
-                        <p className='flex flex-row items-center my-[15px] cursor-pointer'>
+                        {/* <p className='flex flex-row items-center my-[15px] cursor-pointer'>
 
                             <span className='text-[15px] ml-[6px]'>UI/UX Design</span>
-                        </p>
+                        </p> */}
                         <p className='flex flex-row items-center my-[15px] cursor-pointer'>
 
                             <span className='text-[15px] ml-[6px]'>Web Development </span>
@@ -78,7 +78,7 @@ const Footer = () => {
                 </div>
 
                 <div className='mb-[20px] text-[15px] text-center'>
-                    &copy; Ram Ashish Kumar 2024 Inc. All rights reserved
+                    &copy; Ram Ashish Kumar {new Date().getFullYear()} Inc. All rights reserved
                 </div>
             </div>
 
