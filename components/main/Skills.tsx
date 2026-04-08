@@ -17,7 +17,7 @@ import SkillText from '../sub/SkillText'
 const CATEGORIES = [
     {
         key: 'all',
-        label: 'All Skills',
+        label: 'All',
         data: [] as typeof Skill_data,
         color: '#a78bfa',
         description: 'Complete technology stack',
@@ -41,7 +41,7 @@ const CATEGORIES = [
     },
     {
         key: 'fullstack',
-        label: 'DevOps & Tools',
+        label: 'DevOps',
         data: [] as typeof Full_stack,
         color: '#fb923c',
         description: 'Deployment & workflow',
@@ -57,7 +57,7 @@ const CATEGORIES = [
     },
 ]
 
-// ─── Three.js Background ──────────────────────────────────────────────────────
+// ─── Three.js Background (Mobile-Optimized) ───────────────────────────────────
 const ThreeBackground = () => {
     const mountRef = useRef<HTMLDivElement>(null)
 
@@ -65,59 +65,68 @@ const ThreeBackground = () => {
         if (typeof window === "undefined") return
         if (!mountRef.current) return
         const el = mountRef.current
+        
+        // Mobile performance: reduce particle count on small screens
+        const isMobile = window.innerWidth < 768
+        const PARTICLE_COUNT = isMobile ? 12 : 28
+        
         const W = el.clientWidth
         const H = el.clientHeight
 
         const scene = new THREE.Scene()
         const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100)
-        camera.position.z = 8
+        camera.position.z = isMobile ? 10 : 8
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' })
         renderer.setSize(W, H)
-        const pixelRatio =
-            typeof window !== "undefined" ? window.devicePixelRatio : 1
-        renderer.setPixelRatio(Math.min(pixelRatio, 2))
+        const pixelRatio = typeof window !== "undefined" ? window.devicePixelRatio : 1
+        renderer.setPixelRatio(Math.min(pixelRatio, isMobile ? 1.5 : 2))
         el.appendChild(renderer.domElement)
 
-        // Floating mesh grid of skill "nodes"
         const nodes: THREE.Mesh[] = []
         const nodeColors = ['#7c3aed', '#06b6d4', '#10b981', '#f59e0b', '#f43f5e']
         const geoTypes = [
-            new THREE.OctahedronGeometry(0.25, 0),
-            new THREE.TetrahedronGeometry(0.28, 0),
-            new THREE.IcosahedronGeometry(0.22, 0),
+            new THREE.OctahedronGeometry(0.2, 0),
+            new THREE.TetrahedronGeometry(0.22, 0),
+            new THREE.IcosahedronGeometry(0.18, 0),
         ]
 
-        for (let i = 0; i < 28; i++) {
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
             const geo = geoTypes[i % geoTypes.length]
             const mat = new THREE.MeshBasicMaterial({
                 color: new THREE.Color(nodeColors[i % nodeColors.length]),
                 wireframe: true,
                 transparent: true,
-                opacity: 0.18 + Math.random() * 0.12,
+                opacity: isMobile ? 0.12 : 0.18 + Math.random() * 0.12,
             })
             const mesh = new THREE.Mesh(geo, mat)
+            const spread = isMobile ? 12 : 18
             mesh.position.set(
-                (Math.random() - 0.5) * 18,
-                (Math.random() - 0.5) * 12,
-                (Math.random() - 0.5) * 6 - 2
+                (Math.random() - 0.5) * spread,
+                (Math.random() - 0.5) * 8,
+                (Math.random() - 0.5) * 4 - 2
             )
             mesh.userData = {
-                rotX: (Math.random() - 0.5) * 0.008,
-                rotY: (Math.random() - 0.5) * 0.012,
-                floatSpeed: 0.3 + Math.random() * 0.5,
-                floatAmp: 0.08 + Math.random() * 0.12,
+                rotX: (Math.random() - 0.5) * 0.006,
+                rotY: (Math.random() - 0.5) * 0.009,
+                floatSpeed: 0.2 + Math.random() * 0.4,
+                floatAmp: 0.05 + Math.random() * 0.08,
                 originY: mesh.position.y,
             }
             scene.add(mesh)
             nodes.push(mesh)
         }
 
-        // Connecting lines between nearby nodes
-        const lineMat = new THREE.LineBasicMaterial({ color: '#7c3aed', transparent: true, opacity: 0.06 })
+        // Fewer connections on mobile for performance
+        const lineMat = new THREE.LineBasicMaterial({ 
+            color: '#7c3aed', 
+            transparent: true, 
+            opacity: isMobile ? 0.03 : 0.06 
+        })
+        const connectionThreshold = isMobile ? 7 : 5
         for (let i = 0; i < nodes.length; i++) {
             for (let j = i + 1; j < nodes.length; j++) {
-                if (nodes[i].position.distanceTo(nodes[j].position) < 5) {
+                if (nodes[i].position.distanceTo(nodes[j].position) < connectionThreshold) {
                     const points = [nodes[i].position.clone(), nodes[j].position.clone()]
                     const geo = new THREE.BufferGeometry().setFromPoints(points)
                     scene.add(new THREE.Line(geo, lineMat))
@@ -125,17 +134,16 @@ const ThreeBackground = () => {
             }
         }
 
-        let mouseX = 0
-        let mouseY = 0
+        let mouseX = 0, mouseY = 0
         const onMouse = (e: MouseEvent) => {
-            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5
-            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 0.3
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 0.3
         }
-        window.addEventListener('mousemove', onMouse)
+        // Only track mouse on desktop
+        if (!isMobile) window.addEventListener('mousemove', onMouse)
 
         const onResize = () => {
-            const nW = el.clientWidth
-            const nH = el.clientHeight
+            const nW = el.clientWidth, nH = el.clientHeight
             camera.aspect = nW / nH
             camera.updateProjectionMatrix()
             renderer.setSize(nW, nH)
@@ -151,8 +159,10 @@ const ThreeBackground = () => {
                 n.rotation.y += n.userData.rotY
                 n.position.y = n.userData.originY + Math.sin(t * n.userData.floatSpeed) * n.userData.floatAmp
             })
-            camera.position.x += (mouseX - camera.position.x) * 0.04
-            camera.position.y += (-mouseY - camera.position.y) * 0.04
+            // Smoother camera follow on mobile
+            const lerpFactor = isMobile ? 0.02 : 0.04
+            camera.position.x += (mouseX - camera.position.x) * lerpFactor
+            camera.position.y += (-mouseY - camera.position.y) * lerpFactor
             camera.lookAt(scene.position)
             renderer.render(scene, camera)
         }
@@ -160,31 +170,33 @@ const ThreeBackground = () => {
 
         return () => {
             cancelAnimationFrame(raf)
-            window.removeEventListener('mousemove', onMouse)
+            if (!isMobile) window.removeEventListener('mousemove', onMouse)
             window.removeEventListener('resize', onResize)
             if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement)
             renderer.dispose()
+            // Clean up geometries
+            geoTypes.forEach(g => g.dispose())
         }
     }, [])
 
     return <div ref={mountRef} className='absolute inset-0 z-0 pointer-events-none' />
 }
 
-// ─── Stat counter ─────────────────────────────────────────────────────────────
+// ─── Stat counter (Mobile-Optimized) ──────────────────────────────────────────
 const StatPill = ({ value, label, color }: { value: string; label: string; color: string }) => {
     const ref = useRef(null)
     const inView = useInView(ref, { once: true })
     return (
         <motion.div
             ref={ref}
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className='flex flex-col items-center gap-1 px-6 py-3 rounded-2xl border border-white/5'
+            transition={{ duration: 0.4 }}
+            className='flex flex-col items-center gap-1 px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl border border-white/5 min-w-[72px] sm:min-w-[auto]'
             style={{ background: `${color}10`, borderColor: `${color}25` }}
         >
-            <span className='text-2xl font-black' style={{ color }}>{value}</span>
-            <span className='text-[10px] tracking-widest text-gray-500 uppercase'>{label}</span>
+            <span className='text-xl sm:text-2xl font-black' style={{ color }}>{value}</span>
+            <span className='text-[9px] sm:text-[10px] tracking-wider sm:tracking-widest text-gray-500 uppercase text-center leading-tight'>{label}</span>
         </motion.div>
     )
 }
@@ -192,13 +204,14 @@ const StatPill = ({ value, label, color }: { value: string; label: string; color
 // ─── Main Skills Component ────────────────────────────────────────────────────
 const Skills = () => {
     const [activeTab, setActiveTab] = useState('all')
-    const sectionRef = useRef(null)
+    const sectionRef = useRef<HTMLDivElement>(null)
     const gridRef = useRef(null)
     const gridInView = useInView(gridRef, { once: true, margin: '-60px' })
 
     const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
-    const bgY = useTransform(scrollYProgress, [0, 1], [-60, 60])
-    const titleY = useTransform(scrollYProgress, [0, 0.5], [40, 0])
+    // Reduced parallax intensity for mobile performance
+    const bgY = useTransform(scrollYProgress, [0, 1], [-30, 30])
+    const titleY = useTransform(scrollYProgress, [0, 0.5], [20, 0])
     const titleOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1])
 
     // Build category data
@@ -218,96 +231,98 @@ const Skills = () => {
         <section
             ref={sectionRef}
             id='skills'
-            className='relative flex flex-col items-center justify-center w-full min-h-screen overflow-hidden py-28 px-4 md:px-10'
+            className='relative flex flex-col items-center justify-center w-full min-h-screen overflow-hidden py-16 sm:py-20 md:py-28 px-4 sm:px-6 md:px-10'
             style={{ background: 'linear-gradient(180deg, #050510 0%, #080818 60%, #050510 100%)' }}
         >
-            {/* Three.js floating geometries */}
+            {/* Three.js floating geometries - mobile optimized */}
             {/* <ThreeBackground /> */}
 
-            {/* Ambient glow blobs */}
-            <div className='absolute top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none'
-                style={{ background: 'radial-gradient(circle, #7c3aed18 0%, transparent 70%)', filter: 'blur(40px)' }} />
-            <div className='absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full pointer-events-none'
-                style={{ background: 'radial-gradient(circle, #06b6d418 0%, transparent 70%)', filter: 'blur(40px)' }} />
+            {/* Ambient glow blobs - smaller on mobile */}
+            <div className='absolute top-1/4 left-1/2 -translate-x-1/2 sm:left-1/4 sm:translate-x-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full pointer-events-none'
+                style={{ background: 'radial-gradient(circle, #7c3aed18 0%, transparent 70%)', filter: 'blur(32px) sm:blur(40px)' }} />
+            <div className='absolute bottom-1/4 right-1/2 translate-x-1/2 sm:right-1/4 sm:translate-x-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full pointer-events-none'
+                style={{ background: 'radial-gradient(circle, #06b6d418 0%, transparent 70%)', filter: 'blur(32px) sm:blur(40px)' }} />
 
-            {/* Grid overlay */}
+            {/* Grid overlay - finer on mobile */}
             <div className='absolute inset-0 pointer-events-none z-0 opacity-[0.025]'
                 style={{
                     backgroundImage: 'linear-gradient(#7c3aed 1px, transparent 1px), linear-gradient(90deg, #7c3aed 1px, transparent 1px)',
-                    backgroundSize: '60px 60px',
+                    backgroundSize: '40px 40px', // Smaller grid for mobile
                 }} />
 
             {/* ── Content ── */}
-            <div className='relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center gap-12'>
+            <div className='relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center gap-8 sm:gap-10 md:gap-12'>
 
                 {/* Header */}
-                <motion.div style={{ y: titleY, opacity: titleOpacity }} className='w-full'>
+                <motion.div style={{ y: titleY, opacity: titleOpacity }} className='w-full flex justify-center'>
                     <SkillText />
                 </motion.div>
 
-                {/* Stat pills */}
+                {/* Stat pills - wrap on mobile */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-60px' }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className='flex flex-wrap gap-4 justify-center'
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                    className='flex flex-wrap justify-center gap-2.5 sm:gap-4'
                 >
                     <StatPill value='15+' label='Technologies' color='#a78bfa' />
                     <StatPill value='2+' label='Years coding' color='#38bdf8' />
-                    <StatPill value='4' label='Skill domains' color='#34d399' />
-                    <StatPill value='∞' label='Still learning' color='#fb923c' />
+                    <StatPill value='4' label='Domains' color='#34d399' />
+                    <StatPill value='∞' label='Learning' color='#fb923c' />
                 </motion.div>
 
-                {/* Tab filter */}
+                {/* Tab filter - horizontal scroll on mobile, wrap on larger */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className='flex flex-wrap justify-center gap-2'
+                    transition={{ duration: 0.5, delay: 0.25 }}
+                    className='w-full overflow-x-auto sm:overflow-visible pb-2 sm:pb-0 -mx-4 sm:mx-0 px-4 sm:px-0'
                 >
-                    {cats.map((cat) => (
-                        <button
-                            key={cat.key}
-                            onClick={() => setActiveTab(cat.key)}
-                            className='relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden'
-                            style={{
-                                color: activeTab === cat.key ? '#fff' : '#6b7280',
-                                border: `1px solid ${activeTab === cat.key ? cat.color + '60' : 'rgba(255,255,255,0.07)'}`,
-                                background: activeTab === cat.key ? `${cat.color}20` : 'rgba(255,255,255,0.02)',
-                                boxShadow: activeTab === cat.key ? `0 0 20px ${cat.color}25` : 'none',
-                            }}
-                        >
-                            <span className='mr-1.5'>{cat.icon}</span>
-                            {cat.label}
-                            {activeTab === cat.key && (
-                                <motion.div
-                                    layoutId='tab-indicator'
-                                    className='absolute bottom-0 left-0 right-0 h-0.5 rounded-full'
-                                    style={{ background: `linear-gradient(90deg, transparent, ${cat.color}, transparent)` }}
-                                />
-                            )}
-                        </button>
-                    ))}
+                    <div className='flex sm:flex-wrap justify-start sm:justify-center gap-2 min-w-max sm:min-w-0'>
+                        {cats.map((cat) => (
+                            <button
+                                key={cat.key}
+                                onClick={() => setActiveTab(cat.key)}
+                                className='relative px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 overflow-hidden whitespace-nowrap touch-manipulation min-h-[40px] sm:min-h-[44px]'
+                                style={{
+                                    color: activeTab === cat.key ? '#fff' : '#6b7280',
+                                    border: `1px solid ${activeTab === cat.key ? cat.color + '60' : 'rgba(255,255,255,0.07)'}`,
+                                    background: activeTab === cat.key ? `${cat.color}20` : 'rgba(255,255,255,0.02)',
+                                    boxShadow: activeTab === cat.key ? `0 0 20px ${cat.color}25` : 'none',
+                                }}
+                            >
+                                <span className='mr-1.5'>{cat.icon}</span>
+                                {cat.label}
+                                {activeTab === cat.key && (
+                                    <motion.div
+                                        layoutId='tab-indicator'
+                                        className='absolute bottom-0 left-0 right-0 h-0.5 rounded-full'
+                                        style={{ background: `linear-gradient(90deg, transparent, ${cat.color}, transparent)` }}
+                                    />
+                                )}
+                            </button>
+                        ))}
+                    </div>
                 </motion.div>
 
-                {/* Category description */}
+                {/* Category description - mobile optimized */}
                 <AnimatePresence mode='wait'>
                     <motion.p
                         key={activeTab + '-desc'}
-                        initial={{ opacity: 0, y: -8 }}
+                        initial={{ opacity: 0, y: -6 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.3 }}
-                        className='text-xs tracking-widest uppercase text-center -mt-6'
+                        exit={{ opacity: 0, y: 6 }}
+                        transition={{ duration: 0.25 }}
+                        className='text-[10px] sm:text-xs tracking-wider uppercase text-center -mt-2 sm:-mt-4 px-4'
                         style={{ color: activeCat.color }}
                     >
                         {activeCat.description} — {activeCat.data.length} technologies
                     </motion.p>
                 </AnimatePresence>
 
-                {/* Skill icons grid */}
+                {/* Skill icons grid - responsive columns */}
                 <div ref={gridRef} className='w-full'>
                     <AnimatePresence mode='wait'>
                         <motion.div
@@ -315,8 +330,8 @@ const Skills = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.25 }}
-                            className='flex flex-row flex-wrap justify-center gap-5 md:gap-6'
+                            transition={{ duration: 0.2 }}
+                            className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6 justify-items-center'
                         >
                             {activeCat.data.map((item, i) => (
                                 <SkillsDataProvider
@@ -333,19 +348,19 @@ const Skills = () => {
                     </AnimatePresence>
                 </div>
 
-                {/* Bottom divider */}
+                {/* Bottom divider - shorter on mobile */}
                 <motion.div
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    className='w-full max-w-xs h-px rounded-full mt-4'
+                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                    className='w-3/4 sm:w-full max-w-xs h-px rounded-full mt-2 sm:mt-4'
                     style={{ background: 'linear-gradient(90deg, transparent, #7c3aed, #06b6d4, transparent)' }}
                 />
             </div>
 
-            {/* Video BG — subtle */}
-            <div className='absolute inset-0 z-0 opacity-10 pointer-events-none'>
+            {/* Video BG — subtle, disabled on mobile for performance */}
+            <div className='absolute inset-0 z-0 opacity-5 sm:opacity-10 pointer-events-none hidden sm:block'>
                 <video
                     className='w-full h-full object-cover'
                     preload='none'

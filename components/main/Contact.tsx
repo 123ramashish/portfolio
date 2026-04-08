@@ -137,7 +137,7 @@ const Contact = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
                         transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                        className='flex-1 max-w-sm'
+                        className='flex-1 w-full'
                     >
                         <div
                             className='rounded-2xl p-6 border border-white/5'

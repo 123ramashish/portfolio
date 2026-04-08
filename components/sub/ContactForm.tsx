@@ -18,13 +18,13 @@ const FIELDS = [
     { id: 'message', label: 'Message',      type: 'text',  placeholder: 'Tell me about your project...', multiline: true },
 ] as const
 
-// ── Particle burst on send ────────────────────────────────────────────────────
+// ── Particle burst on send (mobile-optimized) ────────────────────────────────
 const SendParticles = ({ trigger }: { trigger: boolean }) => {
-    const particles = Array.from({ length: 16 }, (_, i) => ({
-        angle: (i / 16) * 360,
-        dist: 50 + Math.random() * 40,
+    const particles = Array.from({ length: 12 }, (_, i) => ({ // Reduced count for mobile performance
+        angle: (i / 12) * 360,
+        dist: 40 + Math.random() * 30, // Reduced distance for mobile
         color: i % 3 === 0 ? '#7c3aed' : i % 3 === 1 ? '#06b6d4' : '#a78bfa',
-        size: 3 + Math.random() * 3,
+        size: 2 + Math.random() * 2, // Smaller particles on mobile
     }))
     return (
         <AnimatePresence>
@@ -37,7 +37,7 @@ const SendParticles = ({ trigger }: { trigger: boolean }) => {
                                 key={i}
                                 initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
                                 animate={{ x: Math.cos(r) * p.dist, y: Math.sin(r) * p.dist, opacity: 0, scale: 0 }}
-                                transition={{ duration: 0.7, delay: i * 0.02, ease: 'easeOut' }}
+                                transition={{ duration: 0.6, delay: i * 0.025, ease: 'easeOut' }}
                                 className='absolute rounded-full'
                                 style={{ width: p.size, height: p.size, background: p.color, boxShadow: `0 0 6px ${p.color}` }}
                             />
@@ -89,14 +89,14 @@ const ContactForm = () => {
     }
 
     return (
-        <div ref={ref} className='w-full  z-50'>
+        <div ref={ref} className='w-full mx-auto z-50 px-2 sm:px-0'>
 
-            {/* Section label */}
+            {/* Section label - centered on mobile, right-aligned on desktop */}
             <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className='flex items-center gap-2 mb-6 justify-end'
+                className='flex items-center gap-2 mb-4 sm:mb-6 justify-center sm:justify-end'
             >
                 <span className='text-[10px] tracking-widest text-cyan-400 uppercase font-semibold'>
                     Send a message
@@ -104,7 +104,6 @@ const ContactForm = () => {
                 <div className='h-px w-6 bg-cyan-500' />
             </motion.div>
 
-            {/* Success state */}
             <AnimatePresence mode='wait'>
                 {sent ? (
                     <motion.div
@@ -113,25 +112,25 @@ const ContactForm = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className='flex flex-col items-center justify-center gap-5 py-16 text-center rounded-2xl border border-emerald-500/20'
+                        className='flex flex-col items-center justify-center gap-4 sm:gap-5 py-12 sm:py-16 text-center rounded-2xl border border-emerald-500/20 mx-2 sm:mx-0'
                         style={{ background: 'rgba(16,185,129,0.05)' }}
                     >
                         <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 18, delay: 0.2 }}
-                            className='w-16 h-16 rounded-full flex items-center justify-center text-2xl'
+                            className='w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-xl sm:text-2xl'
                             style={{ background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)' }}
                         >
                             ✓
                         </motion.div>
-                        <div>
-                            <p className='text-white font-semibold text-lg'>Message Sent!</p>
-                            <p className='text-gray-500 text-sm mt-1'>I&apos;ll get back to you within 24 hours.</p>
+                        <div className='px-4'>
+                            <p className='text-white font-semibold text-base sm:text-lg'>Message Sent!</p>
+                            <p className='text-gray-500 text-xs sm:text-sm mt-1 leading-relaxed'>I&apos;ll get back to you within 24 hours.</p>
                         </div>
                         <button
                             onClick={() => setSent(false)}
-                            className='text-xs text-violet-400 hover:text-violet-300 transition-colors tracking-widest uppercase'
+                            className='text-[10px] sm:text-xs text-violet-400 hover:text-violet-300 transition-colors tracking-widest uppercase py-2 px-4 rounded-lg hover:bg-white/5'
                         >
                             Send another →
                         </button>
@@ -140,7 +139,7 @@ const ContactForm = () => {
                     <motion.form
                         key='form'
                         onSubmit={handleSubmit}
-                        className='flex flex-col gap-4'
+                        className='flex flex-col gap-3 sm:gap-4 w-full'
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                     >
@@ -152,7 +151,6 @@ const ContactForm = () => {
                                 transition={{ duration: 0.55, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                                 className='relative group'
                             >
-                                {/* Floating label */}
                                 <motion.label
                                     htmlFor={id}
                                     animate={{
@@ -161,13 +159,12 @@ const ContactForm = () => {
                                         color: focused === id ? '#a78bfa' : '#4b5563',
                                     }}
                                     transition={{ duration: 0.2 }}
-                                    className='absolute left-4 top-3.5 text-sm pointer-events-none origin-left font-medium z-10'
+                                    className='absolute left-4 top-3.5 text-[11px] sm:text-sm pointer-events-none origin-left font-medium z-10'
                                     style={{ transformOrigin: 'left center' }}
                                 >
                                     {label}
                                 </motion.label>
 
-                                {/* Glow border on focus */}
                                 <motion.div
                                     animate={{
                                         opacity: focused === id ? 1 : 0,
@@ -180,14 +177,14 @@ const ContactForm = () => {
                                 {multiline ? (
                                     <textarea
                                         id={id}
-                                        rows={5}
+                                        rows={4} // Reduced rows for mobile
                                         required
                                         value={contact[id as keyof Contact]}
                                         onChange={handleChange}
                                         onFocus={() => setFocused(id)}
                                         onBlur={() => setFocused(null)}
                                         placeholder={focused === id ? placeholder : ''}
-                                        className='w-full pt-5 pb-3 px-4 rounded-xl text-sm text-white resize-none outline-none transition-all duration-200 relative z-1'
+                                        className='w-full pt-5 pb-3 px-4 rounded-xl text-[13px] sm:text-sm text-white resize-none outline-none transition-all duration-200 relative z-1 min-h-[100px] sm:min-h-[120px]'
                                         style={{
                                             background: 'rgba(255,255,255,0.03)',
                                             border: `1px solid ${focused === id ? '#7c3aed60' : 'rgba(255,255,255,0.07)'}`,
@@ -203,7 +200,7 @@ const ContactForm = () => {
                                         onFocus={() => setFocused(id)}
                                         onBlur={() => setFocused(null)}
                                         placeholder={focused === id ? placeholder : ''}
-                                        className='w-full pt-5 pb-3 px-4 rounded-xl text-sm text-white outline-none transition-all duration-200 relative z-1'
+                                        className='w-full pt-5 pb-3 px-4 rounded-xl text-[13px] sm:text-sm text-white outline-none transition-all duration-200 relative z-1 min-h-[44px]' // 44px touch target
                                         style={{
                                             background: 'rgba(255,255,255,0.03)',
                                             border: `1px solid ${focused === id ? '#7c3aed60' : 'rgba(255,255,255,0.07)'}`,
@@ -213,26 +210,24 @@ const ContactForm = () => {
                             </motion.div>
                         ))}
 
-                        {/* Error message */}
                         <AnimatePresence>
                             {error && (
                                 <motion.p
                                     initial={{ opacity: 0, y: -8 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0 }}
-                                    className='text-xs text-red-400 text-center'
+                                    className='text-[11px] sm:text-xs text-red-400 text-center px-4'
                                 >
                                     Something went wrong. Please try again.
                                 </motion.p>
                             )}
                         </AnimatePresence>
 
-                        {/* Submit button */}
                         <motion.div
                             initial={{ opacity: 0, y: 16 }}
                             animate={inView ? { opacity: 1, y: 0 } : {}}
                             transition={{ duration: 0.55, delay: 0.55 }}
-                            className='relative flex justify-end mt-2'
+                            className='relative flex justify-center sm:justify-end mt-1 sm:mt-2'
                         >
                             <div className='relative'>
                                 <SendParticles trigger={burst} />
@@ -242,10 +237,9 @@ const ContactForm = () => {
                                     whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.97 }}
                                     transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                                    className='relative flex items-center gap-3 px-8 py-3.5 rounded-xl font-semibold text-sm text-white overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed'
+                                    className='relative flex items-center justify-center gap-2 sm:gap-3 px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl font-semibold text-[13px] sm:text-sm text-white overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed min-h-[44px] sm:min-h-[48px] w-full sm:w-auto'
                                     style={{ background: 'linear-gradient(135deg, #7c3aed, #06b6d4)' }}
                                 >
-                                    {/* Shimmer sweep */}
                                     <motion.div
                                         animate={{ x: ['-100%', '200%'] }}
                                         transition={{ duration: 2, repeat: Infinity, repeatDelay: 1.5, ease: 'easeInOut' }}
@@ -262,7 +256,7 @@ const ContactForm = () => {
                                         transition={{ duration: 0.6, repeat: Infinity }}
                                         className='relative z-10'
                                     >
-                                        <FaArrowRightLong className='text-white/80 text-base' />
+                                        <FaArrowRightLong className='text-white/80 text-sm sm:text-base' />
                                     </motion.span>
                                 </motion.button>
                             </div>

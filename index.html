@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ram Ashish Kumar - Full Stack Developer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { margin: 0; padding: 0; }
+            .resume-container { box-shadow: none; margin: 0; padding: 20px; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            background: #f5f5f5;
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        #resume {
+            width: 794px;
+            background: white;
+        }
+        
+        .resume-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .download-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+        
+        .download-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        header {
+            text-align: center;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .title {
+            font-size: 16px;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 13px;
+            color: #475569;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .contact-item a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .summary {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #334155;
+            text-align: justify;
+        }
+        
+        .skills-grid {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .skill-category {
+            margin-bottom: 10px;
+        }
+        
+        .skill-category-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+        
+        .skill-list {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.7;
+        }
+        
+        .experience-item, .project-item, .education-item {
+            margin-bottom: 24px;
+            page-break-inside: avoid;
+        }
+        
+        .job-header, .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .job-title, .project-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1e293b;
+        }
+        
+        .company {
+            color: #2563eb;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .job-duration {
+            font-size: 13px;
+            color: #64748b;
+            font-style: italic;
+        }
+        
+        .job-location {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        
+        .tech-stack {
+            font-size: 12px;
+            color: #64748b;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+        
+        li {
+            margin-bottom: 7px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #334155;
+        }
+        
+        .subsection {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .subsection-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .cert-item {
+            font-size: 13px;
+            color: #334155;
+            padding-left: 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .cert-item:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2563eb;
+            font-weight: bold;
+        }
+        
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .achievement-item {
+            font-size: 13px;
+            color: #334155;
+            padding-left: 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .achievement-item:before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            color: #2563eb;
+        }
+        
+        .education-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .degree {
+            font-weight: 700;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        
+        .university {
+            font-size: 13px;
+            color: #475569;
+        }
+        
+        .gpa {
+            font-size: 13px;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        .languages {
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.7;
+        }
+        
+        .technical-proficiency {
+            margin-bottom: 16px;
+        }
+        
+        .proficiency-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .proficiency-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e293b;
+        }
+        
+        .proficiency-level {
+            font-size: 12px;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        .proficiency-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .proficiency-fill {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <button class="download-btn no-print" onclick="downloadPDF()" id="downloadBtn">🖨️ Save as PDF</button>
+    
+    <div class="resume-container" id="resume">
+        <header>
+            <h1>RAM ASHISH KUMAR</h1>
+            <div class="title">Full Stack Developer | MERN & Next.js Specialist</div>
+            <div class="contact-info">
+                <div class="contact-item">📞 +91-7542918414</div>
+                <div class="contact-item">📧 <a href="mailto:ramashish62127@gmail.com">ramashish62127@gmail.com</a></div>
+                <div class="contact-item">🔗 <a href="https://www.linkedin.com/in/ram-ashish-kumar" target="_blank">LinkedIn</a></div>
+                <div class="contact-item">💼 <a href="https://ram-ashish.vercel.app" target="_blank">Portfolio</a></div>
+                <div class="contact-item">📍 Noida, Uttar Pradesh, India</div>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2 class="section-title">Professional Summary</h2>
+            <p class="summary">
+                Accomplished Full Stack Developer with 2+ years of hands-on production experience specializing in architecting and deploying enterprise-grade web applications, multi-tenant SaaS platforms, and sophisticated CRM systems. Demonstrated expertise across the complete technology stack including modern JavaScript frameworks (MERN, Next.js, React Native), cloud infrastructure (AWS), and contemporary DevOps methodologies. Proven track record of optimizing application performance, implementing scalable distributed architectures, and delivering transformative solutions across diverse industry verticals including finance, real estate, human resources, and e-commerce. Strong foundation in algorithmic problem-solving with 500+ data structure challenges completed, complemented by practical experience in prompt engineering for AI integration and building resilient microservices ecosystems. Committed to writing maintainable, well-documented code following industry best practices and agile development principles.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Core Technical Competencies</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-category-name">Frontend Development:</div>
+                    <div class="skill-list">React.js, Next.js (App Router, Pages Router, Server-Side Rendering, Static Site Generation, Incremental Static Regeneration), React Native, HTML5, CSS3, Tailwind CSS, Ant Design, Flowbite, Material-UI, Responsive Web Design, Progressive Web Applications, Search Engine Optimization, Mobile-First Development, Cross-Browser Compatibility, Accessibility Standards (WCAG)</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">Backend Development:</div>
+                    <div class="skill-list">Node.js, Express.js, RESTful API Architecture, JWT-based Authentication, OAuth 2.0 Authorization, Microservices Architecture, Distributed Systems Design, API Gateway Implementation, Custom Middleware Development, Server-Side Rendering, Serverless Computing, Event-Driven Architecture, Message Queuing Systems</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">Database & Data Management:</div>
+                    <div class="skill-list">MongoDB, Mongoose Object Document Mapper, Firebase Realtime Database, Redis In-Memory Data Store, PostgreSQL, NoSQL Database Design, Relational Schema Architecture, Query Performance Optimization, Indexing Strategies, Database Sharding, Replication Configuration, Data Migration Planning, Backup & Disaster Recovery</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">Cloud Infrastructure & DevOps:</div>
+                    <div class="skill-list">Amazon Web Services (EC2 Compute, S3 Object Storage, Lambda Serverless, CloudWatch Monitoring, API Gateway, Amplify Hosting, CloudFront CDN, IAM Security, Route 53 DNS), Docker Containerization, Continuous Integration/Continuous Deployment Pipelines, GitHub Actions Automation, Git Version Control, Vercel Edge Deployment</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">API Development & Documentation:</div>
+                    <div class="skill-list">Postman API Testing, Swagger/OpenAPI Specification, Comprehensive API Documentation, RESTful Best Practices, Versioning Strategies, Rate Limiting Implementation, API Security Protocols</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">Software Engineering Practices:</div>
+                    <div class="skill-list">Data Structures & Algorithms, Software Design Patterns (Singleton, Factory, Observer, MVC), System Architecture Design, Object-Oriented Programming Principles, Agile/Scrum Methodologies, Test-Driven Development, Clean Code Principles, SOLID Principles, Code Review Processes, Security Best Practices, Performance Optimization Techniques, Debugging & Profiling, Technical Documentation</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">Project Management & Client Relations:</div>
+                    <div class="skill-list">Client Management & Stakeholder Engagement, Requirements Gathering & Analysis, Business Requirements Documentation, User Story Creation, Sprint Planning & Estimation, Cross-Functional Team Collaboration, Technical Consultation, Client Communication & Presentations, Scope Management, Expectation Management, Feedback Integration</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">Programming Languages & Technologies:</div>
+                    <div class="skill-list">JavaScript (Advanced), TypeScript (Strongly Typed), Python (Scripting & Automation)</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-name">Third-Party Integration & APIs:</div>
+                    <div class="skill-list">Payment Gateway Integration (Stripe, Razorpay), Transactional Email Services (SendGrid, AWS SES), Cloud Storage Solutions, ERP System Integration (Tally), Geolocation & Mapping Services, Social Media Authentication, SMS Gateway Services, Analytics Platform Integration</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Professional Experience</h2>
+            
+            <div class="experience-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Full Stack Developer</div>
+                        <div class="company">Ameya Innovex</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="job-duration">Dec 2024 – Present</div>
+                        <div class="job-location">Hybrid, India</div>
+                    </div>
+                </div>
+                <ul>
+                    <li>Spearheading the architecture, development, and deployment of multiple enterprise-grade SaaS products serving 1000+ organizational users across finance, human resources, operations, and client relationship management domains</li>
+                    <li><strong>Cashwise (Comprehensive Expense Management Solution):</strong> Engineered a full-featured financial tracking system featuring account-wise expense categorization, digital voucher workflow automation, and seamless Tally ERP bidirectional integration enabling real-time financial data synchronization, automated reconciliation, and compliance reporting. Reduced manual accounting tasks by 60% and improved financial visibility through customizable dashboards</li>
+                    <li><strong>OfficePulse (Integrated Operations Platform):</strong> Architected and deployed an end-to-end business operations suite encompassing lead acquisition and nurturing workflows, intelligent customer query routing and resolution, automated billing and invoicing processes, and comprehensive payment tracking functionality. Successfully streamlined office operations resulting in 40% efficiency improvement and 25% reduction in response times</li>
+                    <li><strong>Multi-Tenant Enterprise SaaS Ecosystem:</strong> Contributed as core developer to a unified organizational management platform integrating Human Resource Management System (HRMS), Project Management Suite, Customer Relationship Management (CRM), IT Service Management Ticketing System, and Enterprise Resource Planning (ERP) modules. Implemented sophisticated license-based feature control mechanisms and hierarchical organizational structure supporting unlimited depth for enterprise clients</li>
+                    <li>Designed and implemented granular Role-Based Access Control (RBAC) framework spanning 5 distinct permission tiers with customizable resource-level permissions, ensuring robust data isolation across tenant boundaries in multi-tenant architecture. Achieved 100% security audit compliance</li>
+                    <li>Developed advanced task management and productivity analytics system featuring delayed-task identification algorithms, comprehensive time-tracking integration, automated attendance monitoring with biometric device support, and detailed productivity reporting dashboards. Successfully reduced project delays by 30% and improved resource allocation efficiency</li>
+                    <li>Led complete software development lifecycle activities including comprehensive requirements gathering and analysis, scalable API architecture design and implementation, normalized database schema modeling with performance optimization, and dynamic frontend dashboard development utilizing component-based architecture. Consistently delivered features adhering to Agile/Scrum sprint cycles with 95% on-time delivery rate</li>
+                    <li>Collaborated cross-functionally with product managers, UI/UX designers, quality assurance engineers, and stakeholders to translate business requirements into technical specifications and deliverable solutions</li>
+                    <li>Managed direct client relationships, conducting regular meetings to gather requirements, provide progress updates, demonstrate features, and incorporate feedback. Successfully maintained 100% client satisfaction rate through effective communication and expectation management</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Full Stack Developer</div>
+                        <div class="company">Hobbit</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="job-duration">Jan 2023 – Nov 2024</div>
+                        <div class="job-location">Remote, Noida</div>
+                    </div>
+                </div>
+                <ul>
+                    <li>Directed the complete development lifecycle of an enterprise-scale real estate marketplace platform managing 5,000+ active property listings with sophisticated geolocation-based search algorithms, multi-criteria filtering capabilities (price range, property type, amenities, location radius), and intelligent recommendation engine</li>
+                    <li>Architected and deployed scalable distributed microservices backend infrastructure capable of processing 10,000+ daily API requests with sustained 99.9% uptime and sub-200ms average response times. Utilized Node.js event loop optimization, Express.js middleware chaining, and MongoDB aggregation pipeline for superior performance</li>
+                    <li>Engineered responsive, mobile-first user interface leveraging React component composition and Tailwind CSS utility-first methodology, resulting in 45% improvement in mobile user retention metrics, 25% reduction in bounce rate, and 30% increase in user engagement time</li>
+                    <li>Developed intelligent property matching algorithm incorporating collaborative filtering techniques, user preference learning, behavioral pattern analysis, and location-based scoring. Achieved 30% improvement in user-property match accuracy and 20% increase in inquiry conversion rates</li>
+                    <li>Built comprehensive administrative control panel featuring real-time analytics dashboards with customizable widgets, granular user management with audit logging, content moderation workflows with approval queues, automated reporting capabilities with scheduled email delivery, and data export functionality supporting multiple formats (CSV, Excel, PDF)</li>
+                    <li>Integrated diverse third-party service providers including payment gateway solutions (Stripe for international transactions, Razorpay for domestic payments), transactional email automation platform (SendGrid for notifications and marketing), and cloud storage infrastructure (AWS S3 for image/document storage with CloudFront CDN for optimized global content delivery)</li>
+                    <li>Mentored and guided 2 junior developers through structured code review sessions, pair programming exercises, and knowledge transfer workshops. Established comprehensive best practices documentation covering component architecture patterns, API design principles, state management strategies, and performance optimization techniques</li>
+                    <li>Implemented comprehensive monitoring and alerting infrastructure using AWS CloudWatch, enabling proactive issue detection and rapid incident response</li>
+                    <li>Conducted stakeholder meetings for requirements elicitation, creating detailed technical specifications and user stories. Translated business objectives into actionable development tasks while managing client expectations throughout project lifecycle</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">MERN Stack Developer Intern</div>
+                        <div class="company">Coding Ninjas</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="job-duration">Jun 2022 – Dec 2022</div>
+                        <div class="job-location">Remote</div>
+                    </div>
+                </div>
+                <ul>
+                    <li>Conceptualized, developed, and deployed 6 production-quality web applications including interactive Stack Visualizer educational tool, feature-rich Resume Builder platform, Real-Time Chat Application with WebSocket connectivity, Task Management Dashboard, Data Visualization Tool, and E-commerce Product Catalog utilizing complete MERN technology stack</li>
+                    <li>Architected and implemented robust RESTful API endpoints with comprehensive Swagger/OpenAPI documentation including request/response schemas, authentication requirements, error codes, and usage examples. Reduced frontend team integration time by 40% through clear documentation and standardized API contracts</li>
+                    <li>Orchestrated application deployment workflows on AWS Amplify platform featuring automated continuous integration/continuous deployment pipelines, ensuring zero-downtime releases, automatic rollback capabilities on failure, and seamless environment promotion from development through staging to production</li>
+                    <li>Demonstrated strong algorithmic problem-solving capabilities by successfully completing 500+ data structures and algorithms challenges across multiple difficulty levels in Java and Python programming languages. Covered topics including arrays, linked lists, trees, graphs, dynamic programming, greedy algorithms, and advanced data structures</li>
+                    <li>Actively participated in Agile development practices including daily standup meetings, sprint planning sessions, backlog grooming activities, sprint retrospectives, and iterative development cycles. Contributed to team velocity improvements and process optimization initiatives</li>
+                    <li>Gained hands-on experience with modern development tooling including Git branching strategies, pull request workflows, continuous integration systems, automated testing frameworks, and deployment automation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Featured Technical Projects</h2>
+            
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">Enterprise CRM & Intelligent Ticketing System</div>
+                </div>
+                <div class="tech-stack">Technology Stack: Next.js 14, Node.js, Express.js, MongoDB, Mongoose ODM, JWT Authentication, Tailwind CSS, React Hooks, Context API</div>
+                <ul>
+                    <li>Architected highly configurable Customer Relationship Management platform featuring dynamic field creation system, customizable workflow automation engine, and sophisticated role-based access control serving 500+ business users across multiple organizations</li>
+                    <li>Implemented advanced multi-criteria filtering system supporting 15+ filter types (text search, date ranges, numerical comparisons, boolean flags, multi-select dropdowns) with full-text search capabilities leveraging MongoDB text indexes. Achieved sub-200ms query response times on datasets exceeding 100,000 records</li>
+                    <li>Developed real-time analytics dashboards featuring customizable Key Performance Indicators (KPIs), trend analysis visualizations, comparative reporting tools, automated scheduled report generation with email delivery, and comprehensive data export functionality supporting CSV, Excel, and PDF formats</li>
+                    <li>Engineered intelligent automated ticket routing system utilizing priority-based queuing, category-based agent assignment, workload balancing algorithms, and agent availability tracking. Successfully reduced average response time by 35% and improved customer satisfaction scores by 28%</li>
+                    <li>Implemented comprehensive audit logging system tracking all user actions, data modifications, and system events for compliance and security purposes</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">Academic Institution Management ERP System</div>
+                </div>
+                <div class="tech-stack">Technology Stack: React.js, Express.js, MongoDB, Firebase Authentication, Firebase Cloud Storage, Material-UI, Redux State Management</div>
+                <ul>
+                    <li>Designed and deployed comprehensive academic Enterprise Resource Planning system managing complete lifecycle for 1,000+ students, 100+ faculty members, and administrative personnel including enrollment, attendance, assessments, gradebooks, and reporting</li>
+                    <li>Developed sophisticated grade management module featuring automated mark entry workflows, configurable grading schemes, weighted scoring calculations, automated report card generation with customizable templates, parent notification system with SMS/email integration, and student performance analytics with trend identification</li>
+                    <li>Implemented secure multi-level authentication framework supporting distinct user roles (students, parents, teachers, administrators) with hierarchical access control, session management, and password policies adhering to security best practices</li>
+                    <li>Built intelligent attendance tracking system with biometric device integration, automated absence reporting with configurable thresholds, parent notification triggers, monthly attendance analytics with visualization, and leave management workflows with approval mechanisms</li>
+                    <li>Created comprehensive fee management module handling fee structure configuration, payment collection, receipt generation, outstanding balance tracking, and financial reporting</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">Multi-Vendor E-commerce Marketplace Platform</div>
+                </div>
+                <div class="tech-stack">Technology Stack: Next.js, Node.js, MongoDB, AWS S3, AWS CloudFront CDN, Stripe Payment Gateway, Redis Caching, Tailwind CSS</div>
+                <ul>
+                    <li>Constructed scalable multi-vendor e-commerce ecosystem supporting independent merchant storefronts with isolated inventory management, customizable store branding, product catalog management, and vendor-specific analytics dashboards</li>
+                    <li>Engineered complete shopping experience including persistent shopping cart with session management, secure checkout workflow with address validation, Stripe payment gateway integration processing transactions exceeding $50,000, order confirmation system, and automated email notifications</li>
+                    <li>Developed intelligent product recommendation engine employing collaborative filtering algorithms, user purchase history analysis, browsing behavior tracking, and category-based suggestions. Achieved 25% increase in cross-sell opportunities and 18% improvement in average order value</li>
+                    <li>Implemented comprehensive order management system featuring real-time order tracking with carrier integration, automated status update notifications via email/SMS, customer support ticket integration, return/refund workflows with approval mechanisms, and vendor payout calculations</li>
+                    <li>Optimized digital asset delivery infrastructure utilizing AWS S3 for scalable object storage and CloudFront CDN for global content distribution, resulting in 60% reduction in bandwidth costs, 70% improvement in international load times, and enhanced user experience across geographic regions</li>
+                    <li>Implemented Redis-based caching strategy for frequently accessed data, reducing database load by 40% and improving response times</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">MVNFMS - Solar Energy Services Platform</div>
+                </div>
+                <div class="tech-stack">Technology Stack: React.js, Node.js, Express.js, AWS EC2, AWS S3, AWS CloudWatch, MongoDB</div>
+                <ul>
+                    <li>Architected and deployed comprehensive solar energy services website on AWS EC2 compute instances with auto-scaling configuration, S3-based static asset hosting, CloudFront CDN integration for optimized global content delivery, and MongoDB database with automated backup procedures</li>
+                    <li>Configured advanced CloudWatch monitoring infrastructure featuring custom metric collection, real-time performance dashboards with key indicators (CPU utilization, memory consumption, network throughput, application response times), automated alerting mechanisms with SNS notifications, and proactive system health management protocols</li>
+                    <li>Executed comprehensive infrastructure optimization initiative analyzing resource utilization patterns, implementing lazy loading strategies, enabling browser caching policies, and optimizing image delivery. Achieved 60% reduction in average page load time (from 3.2s to 1.3s) and 30% decrease in monthly AWS operational costs through rightsizing and intelligent caching strategies</li>
+                    <li>Developed interactive contact forms with server-side validation, service request management system with workflow automation, automated email notification delivery for customer inquiries, and lead tracking functionality for sales team</li>
+                    <li>Implemented SSL/TLS certificate configuration, security headers, and firewall rules ensuring secure data transmission</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">Samasya-Samadhan - Environmental Initiative Platform</div>
+                </div>
+                <div class="tech-stack">Technology Stack: React.js, AWS Lambda, AWS Amplify, Terraform, Jenkins CI/CD, Node.js, DynamoDB</div>
+                <ul>
+                    <li>Deployed comprehensive environmental awareness and action platform leveraging AWS Amplify hosting with global CDN distribution, automated continuous integration/continuous deployment pipeline orchestrated through Jenkins build server, ensuring rapid feature delivery and maintaining deployment consistency</li>
+                    <li>Architected serverless backend processing utilizing AWS Lambda functions for event-driven workflows, reducing infrastructure operational costs by 50% compared to traditional always-on server architecture while maintaining scalability and eliminating server maintenance overhead</li>
+                    <li>Implemented Infrastructure as Code practices using Terraform for declarative cloud resource provisioning, version-controlled infrastructure definitions enabling repeatable deployments across multiple environments (development, staging, production), and facilitating disaster recovery procedures</li>
+                    <li>Built comprehensive community engagement features including environmental issue reporting with geolocation tagging, solution tracking workflows with progress updates, community voting mechanisms, impact measurement analytics with visualization, and social sharing capabilities</li>
+                    <li>Integrated DynamoDB for scalable NoSQL data storage supporting high-traffic loads and rapid data retrieval</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">HobitHomes - Real Estate Listing Portal</div>
+                </div>
+                <div class="tech-stack">Technology Stack: MongoDB, Express.js, React.js, Node.js (MERN), AWS EC2, AWS S3, AWS API Gateway, AWS Lambda, Google Maps API</div>
+                <ul>
+                    <li>Designed and implemented comprehensive property listing marketplace featuring advanced search filters (price range, property type, location, amenities, availability status), interactive map integration with property location visualization, geolocation-based distance calculations, and property comparison tools</li>
+                    <li>Architected scalable cloud infrastructure leveraging AWS S3 for unlimited image storage capacity, AWS API Gateway for managed API endpoints with built-in throttling and caching, and AWS Lambda functions for serverless image processing including resizing, format conversion, and thumbnail generation</li>
+                    <li>Developed secure user authentication system with JWT tokens, property owner dashboard for listing management (create, update, delete operations), inquiry tracking system with email notifications, saved searches functionality, and favorite properties feature</li>
+                    <li>Built responsive user interface ensuring seamless experience across desktop computers, tablet devices, and mobile smartphones with touch-optimized interactions and adaptive layouts</li>
+                    <li>Implemented full-text search capabilities with MongoDB text indexes and autocomplete suggestions for enhanced user experience</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">Interactive Stack Visualizer - Educational Tool</div>
+                </div>
+                <div class="tech-stack">Technology Stack: React.js, JavaScript, CSS3 Animations, HTML5 Canvas</div>
+                <ul>
+                    <li>Created interactive educational visualization tool for stack data structure operations (push, pop, peek, isEmpty) featuring step-by-step animation sequences, variable speed controls, and detailed operation explanations</li>
+                    <li>Implemented real-time code execution engine with syntax highlighting, visual feedback mechanisms displaying stack state transitions, and educational tooltips explaining algorithmic concepts</li>
+                    <li>Designed intuitive user interface supporting multiple visualization modes, customizable stack capacity, and example problem sets for student practice</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">Professional Resume Builder Application</div>
+                </div>
+                <div class="tech-stack">Technology Stack: React.js, Node.js, Express.js, MongoDB, PDF Generation Library (jsPDF), Redux</div>
+                <ul>
+                    <li>Developed feature-rich resume creation platform offering 10+ professional templates with customizable color schemes, real-time preview functionality, and high-quality PDF export capability</li>
+                    <li>Implemented intuitive drag-and-drop interface for section reordering, dynamic form fields supporting custom entries, rich text editor for content formatting, and template switching without data loss</li>
+                    <li>Built user account system with resume storage, version history tracking, and sharing capabilities generating unique URLs for portfolio distribution</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <div class="project-title">Real-Time Chat Application</div>
+                </div>
+                <div class="tech-stack">Technology Stack: React.js, Node.js, Socket.io, MongoDB, Express.js, JWT Authentication</div>
+                <ul>
+                    <li>Architected real-time messaging platform supporting 100+ concurrent users with WebSocket persistent connections via Socket.io library, ensuring instant message delivery with sub-second latency</li>
+                    <li>Implemented comprehensive features including private direct messaging with read receipts, group chat channels with member management, online status indicators with last-seen timestamps, typing indicators, message persistence with MongoDB storage, and conversation history retrieval</li>
+                    <li>Developed notification system for offline message delivery, file sharing capabilities, and emoji support enhancing user communication experience</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Technical Proficiency Levels</h2>
+            
+            <div class="technical-proficiency">
+                <div class="proficiency-header">
+                    <span class="proficiency-name">React.js & Next.js Development</span>
+                    <span class="proficiency-level">Expert</span>
+                </div>
+                <div class="proficiency-bar">
+                    <div class="proficiency-fill" style="width: 95%"></div>
+                </div>
+            </div>
+            
+            <div class="technical-proficiency">
+                <div class="proficiency-header">
+                    <span class="proficiency-name">Node.js & Express.js Backend</span>
+                    <span class="proficiency-level">Expert</span>
+                </div>
+                <div class="proficiency-bar">
+                    <div class="proficiency-fill" style="width: 90%"></div>
+                </div>
+            </div>
+            
+            <div class="technical-proficiency">
+                <div class="proficiency-header">
+                    <span class="proficiency-name">MongoDB & Database Design</span>
+                    <span class="proficiency-level">Advanced</span>
+                </div>
+                <div class="proficiency-bar">
+                    <div class="proficiency-fill" style="width: 88%"></div>
+                </div>
+            </div>
+            
+            <div class="technical-proficiency">
+                <div class="proficiency-header">
+                    <span class="proficiency-name">AWS Cloud Services</span>
+                    <span class="proficiency-level">Beginner</span>
+                </div>
+                <div class="proficiency-bar">
+                    <div class="proficiency-fill" style="width: 60%"></div>
+                </div>
+            </div>
+            
+            <div class="technical-proficiency">
+                <div class="proficiency-header">
+                    <span class="proficiency-name">Microservices Architecture</span>
+                    <span class="proficiency-level">Advanced</span>
+                </div>
+                <div class="proficiency-bar">
+                    <div class="proficiency-fill" style="width: 82%"></div>
+                </div>
+            </div>
+            
+            <div class="technical-proficiency">
+                <div class="proficiency-header">
+                    <span class="proficiency-name">CI/CD & DevOps Practices</span>
+                    <span class="proficiency-level">Intermediate</span>
+                </div>
+                <div class="proficiency-bar">
+                    <div class="proficiency-fill" style="width: 78%"></div>
+                </div>
+            </div>
+            
+            <div class="technical-proficiency">
+                <div class="proficiency-header">
+                    <span class="proficiency-name">Client Management & Requirements Gathering</span>
+                    <span class="proficiency-level">Advanced</span>
+                </div>
+                <div class="proficiency-bar">
+                    <div class="proficiency-fill" style="width: 88%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Education & Academic Background</h2>
+            <div class="education-item">
+                <div class="education-details">
+                    <div>
+                        <div class="degree">Bachelor of Technology in Computer Science & Engineering</div>
+                        <div class="university">Sharda University, Greater Noida, Uttar Pradesh</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="gpa">CGPA: 8.6/10</div>
+                        <div class="job-duration">2021 - 2025</div>
+                    </div>
+                </div>
+                <div class="university" style="margin-top: 8px;">
+                    <strong>Relevant Coursework:</strong> Data Structures & Algorithms, Database Management Systems, Operating Systems, Computer Networks, Web Technologies, Software Engineering, Object-Oriented Programming, Cloud Computing, Distributed Systems, Computer Architecture, Theory of Computation, Compiler Design
+                </div>
+                <div class="university" style="margin-top: 8px;">
+                    <strong>Academic Projects:</strong> Student Management System, Library Management System, Banking Application, Hospital Management System
+                </div>
+            </div>
+            <div class="education-item" style="margin-top: 16px;">
+                <div class="education-details">
+                    <div>
+                        <div class="degree">XII (Senior Secondary Education) - Science Stream</div>
+                        <div class="university">M.L.S.M College, Darbhanga, Bihar (BSEB Board)</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="gpa">84.8%</div>
+                        <div class="job-duration">2019 - 2021</div>
+                    </div>
+                </div>
+                <div class="university" style="margin-top: 4px;">
+                    <strong>Major Subjects:</strong> Physics, Chemistry, Mathematics, Computer Science, English
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Professional Certifications</h2>
+            <div class="certifications-grid">
+                <div class="cert-item">AWS Academy Graduate - Cloud Foundations (2023)</div>
+                <div class="cert-item">AWS Academy Graduate - Architecting Solutions (2023)</div>
+                <div class="cert-item">Full Stack Web Development - Coding Ninjas (2022)</div>
+                <div class="cert-item">SQL Intermediate Certification - HackerRank (2022)</div>
+                <div class="cert-item">Oracle Academy - Java Foundation (2021)</div>
+                <div class="cert-item">Oracle Academy - Database Programming with SQL (2021)</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Achievements & Recognition</h2>
+            <div class="achievements">
+                <div class="achievement-item">Top 100 Coder - GeeksforGeeks Platform (2023)</div>
+                <div class="achievement-item">Expert Rating - Coding Ninjas Platform (2022)</div>
+                <div class="achievement-item">National Finalist - Smart India Hackathon (2023)</div>
+                <div class="achievement-item">Academic Scholar - Sharda University (2021-2025)</div>
+                <div class="achievement-item">500+ DSA Problems Solved - Multiple Platforms</div>
+                <div class="achievement-item">Open Source Contributor - GitHub Community</div>
+                <div class="achievement-item">Hackathon Participant - Multiple National Events</div>
+                <div class="achievement-item">Code Review Excellence - 100+ Reviews Completed</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Professional Development & Learning</h2>
+            <div class="subsection">
+                <div class="subsection-title">Continuous Learning Initiatives:</div>
+                <ul>
+                    <li>Regularly participate in online technical courses and workshops covering emerging technologies including containerization with Kubernetes, serverless architectures, modern frontend frameworks, and data engineering pipelines</li>
+                    <li>Active member of developer communities including Stack Overflow, GitHub Discussions, and Reddit programming forums, contributing solutions and learning from industry experts</li>
+                    <li>Participate in coding competitions and hackathons to sharpen problem-solving skills and stay current with competitive programming trends</li>
+                    <li>Engage in continuous self-study of new technologies and best practices through online documentation, video tutorials, and technical courses</li>
+                </ul>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-title">Areas of Current Exploration:</div>
+                <ul>
+                    <li>Advanced Kubernetes orchestration patterns and service mesh technologies for microservices deployment</li>
+                    <li>Data Engineering full stack including Apache Spark for big data processing, Apache Kafka for real-time data streaming, ETL pipeline development, data warehouse architecture, data lake design, Apache Airflow for workflow orchestration, and dimensional modeling techniques</li>
+                    <li>Event-driven architectures using message brokers like RabbitMQ and advanced queue management</li>
+                    <li>Advanced TypeScript patterns and decorators for enterprise application development</li>
+                    <li>Performance optimization techniques including code splitting, tree shaking, and bundle size reduction</li>
+                    <li>Security best practices including OWASP Top 10 vulnerabilities and secure coding standards</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Additional Information</h2>
+            <div class="languages"><strong>Languages:</strong> English (Professional Working Proficiency - Speaking, Reading, Writing), Hindi (Native Fluency - Speaking, Reading, Writing), Maithili (Mother Tongue - Native Fluency)</div>
+            <div class="languages" style="margin-top: 8px;"><strong>Technical Interests:</strong> Open Source Software Contribution, Cloud Architecture Design Patterns, Distributed Systems Engineering, Microservices Architecture, Algorithmic Problem Solving, DevOps Automation Practices, Performance Optimization Techniques, Security Best Practices, Data Engineering & Big Data Processing</div>
+            <div class="languages" style="margin-top: 8px;"><strong>Professional Attributes:</strong> Strong analytical and problem-solving capabilities, excellent written and verbal communication skills, ability to work independently and collaboratively in team environments, quick learner with adaptability to new technologies, detail-oriented with focus on code quality and maintainability</div>
+            <div class="languages" style="margin-top: 8px;"><strong>Work Authorization:</strong> Indian Citizen | Open to relocation within India or internationally for the right opportunity</div>
+            <div class="languages" style="margin-top: 8px;"><strong>Availability:</strong> Immediate joining possible / Notice period negotiable based on project requirements</div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">References</h2>
+            <p class="summary">Professional references and detailed project portfolio available upon request. Additional work samples, code repositories, and technical demonstrations can be shared during interview process.</p>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById("resume");
+            const button = document.getElementById("downloadBtn");
+            
+            // Check if html2pdf is loaded
+            if (typeof html2pdf === 'undefined') {
+                alert('❌ PDF library not loaded!\n\nPlease use: Ctrl+P (Windows) or Cmd+P (Mac)\nThen select "Save as PDF"');
+                window.print();
+                return;
+            }
+            
+            button.innerText = "⏳ Generating PDF...";
+            button.disabled = true;
+            
+            const opt = {
+                margin: 0.5,
+                filename: "Ram_Ashish_Kumar_Resume.pdf",
+                image: { type: "jpeg", quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+            };
+            
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .save()
+                .then(() => {
+                    button.innerText = "✅ Downloaded!";
+                    setTimeout(() => {
+                        button.innerText = "🖨️ Save as PDF";
+                        button.disabled = false;
+                    }, 2000);
+                })
+                .catch((error) => {
+                    console.error('PDF Error:', error);
+                    alert('❌ Download failed!\n\nFallback: Press Ctrl+P (Windows) or Cmd+P (Mac)\nThen select "Save as PDF"');
+                    button.innerText = "🖨️ Save as PDF";
+                    button.disabled = false;
+                    window.print();
+                });
+        }
+        
+        // Check if library loaded on page load
+        window.addEventListener('load', () => {
+            if (typeof html2pdf === 'undefined') {
+                console.warn('html2pdf library failed to load from CDN');
+            } else {
+                console.log('✅ html2pdf library loaded successfully');
+            }
+        });
+    </script>
+</body>
+</html>
